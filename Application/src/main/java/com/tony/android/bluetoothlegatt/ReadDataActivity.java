@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 
@@ -155,6 +156,7 @@ public class ReadDataActivity extends Activity {
             mBluetoothLeService.setCharacteristicNotification(
                     mSensorDataCharacteristic, true);
         }
+        Toast.makeText(getApplicationContext(),"Read data success",Toast.LENGTH_LONG).show();
     }
     private void updateConnectionState(final int resourceId) {
         runOnUiThread(new Runnable() {
