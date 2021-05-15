@@ -42,10 +42,6 @@ public class ReadDataActivity extends Activity {
     private BluetoothGattCharacteristic mNotifyCharacteristic;
     private BluetoothGattCharacteristic mSensorDataCharacteristic;
 
-    private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics =
-            new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +54,7 @@ public class ReadDataActivity extends Activity {
         mConnectionState = findViewById(R.id.connection_state);
         // getting reference of  ExpandableTextView
         mExpTvSensorData =  findViewById(R.id.expand_text_view).findViewById(R.id.expand_text_view);
-        mExpTvSensorData.setText(getString(R.string.device_info));
+        mExpTvSensorData.setText(getString(R.string.no_data));
         mTvUuidCharacteristic = findViewById(R.id.txtUUID);
         mBtnReadData = findViewById(R.id.btnReadData);
         mBtnReadData.setEnabled(false);
@@ -68,6 +64,7 @@ public class ReadDataActivity extends Activity {
                 readCharacteristic();
             }
         });
+
         getActionBar().setTitle(mDeviceName);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
@@ -173,8 +170,8 @@ public class ReadDataActivity extends Activity {
             mExpTvSensorData.setText(data);
         }
     }
-    private BluetoothGattCharacteristic filterGattServices(List<BluetoothGattService> gattServices){
 
+    private BluetoothGattCharacteristic filterGattServices(List<BluetoothGattService> gattServices){
         BluetoothGattCharacteristic result = null;
         if(gattServices == null){
             return result;
