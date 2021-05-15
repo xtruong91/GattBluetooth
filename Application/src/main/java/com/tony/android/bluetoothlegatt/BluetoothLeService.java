@@ -49,7 +49,7 @@ public class BluetoothLeService extends Service {
             "com.tony.bluetooth.le.EXTRA_DATA";
 
     public final static UUID UUID_HEART_RATE_MEASUREMENT =
-            UUID.fromString(SampleGattAttributes.HEART_RATE_MEASUREMENT);
+            UUID.fromString(SampleGattAttributes.GATT_SERVICE);
 
     // Implements callback methods for GATT events that the app cares about.  For tony,
     // connection change and services discovered.
@@ -292,7 +292,7 @@ public class BluetoothLeService extends Service {
         // This is specific to Heart Rate Measurement.
         if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
             BluetoothGattDescriptor descriptor = characteristic.getDescriptor(
-                    UUID.fromString(SampleGattAttributes.HEART_RATE_MEASUREMENT));
+                    UUID.fromString(SampleGattAttributes.GATT_SERVICE));
             if(descriptor != null){
                 descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
                 mBluetoothGatt.writeDescriptor(descriptor);

@@ -2,7 +2,7 @@
 
 <resources>
     <string name="ble_not_supported">BLE is not supported</string>
-    <string name="label_read_data">Read Data:</string>
+    <string name="label_read_data">Read Data</string>
     <string name="label_write_data">Write Data:</string>
     <string name="label_device_address">Device address:</string>
     <string name="label_state">State:</string>
@@ -21,4 +21,7 @@
     <string name="menu_disconnect">Disconnect</string>
     <string name="menu_scan">Scan</string>
     <string name="menu_stop">Stop</string>
+    <string name="device_info">MAC: C3:2C:42:29:97:2B
+    Service: bd8522d8-30e9-49d4-6c8d-04b58f529834
+    Characteristics: bd851524-30e9-49d4-6c8d-04b58f529834</string>
 </resources>

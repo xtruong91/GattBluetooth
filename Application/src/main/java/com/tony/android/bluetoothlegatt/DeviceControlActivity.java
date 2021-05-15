@@ -188,24 +188,6 @@ public class DeviceControlActivity extends Activity {
         }
     }
 
-    private void requestId_Sec(String uuidService){
-        Intent intent = new Intent(this, DeviceConfigActivity.class);
-        intent.putExtra(DeviceConfigActivity.EXTRAS_DEVICE_NAME, mDeviceName);
-        intent.putExtra(DeviceConfigActivity.EXTRAS_DEVICE_ADDRESS,mDeviceAddress);
-        intent.putExtra(DeviceConfigActivity.EXTRAS_UUID_SERVICE,uuidService);
-        ArrayList<BluetoothGattCharacteristic> uuidChars = new ArrayList<>();
-        for(ArrayList<BluetoothGattCharacteristic> item : mGattCharacteristics){
-            for(BluetoothGattCharacteristic blue: item){
-                String uuid = blue.getService().getUuid().toString();
-                if(uuidService.equals(uuid)){
-                    uuidChars.add(blue);
-                }
-            }
-        }
-        intent.putParcelableArrayListExtra(DeviceConfigActivity.EXTRAS_UUID_CHARACTERISTIC,uuidChars); // Be sure con is not null here
-        startActivity(intent);
-
-    }
 
     @Override
     protected void onResume() {
