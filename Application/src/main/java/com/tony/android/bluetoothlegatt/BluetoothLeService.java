@@ -111,17 +111,39 @@ public class BluetoothLeService extends Service {
         // This is special handling for the Heart Rate Measurement profile.  Data parsing is
         // carried out as per profile specifications:
         // http://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml
-        if (UUID_CHARACTERISTIC.equals(characteristic.getUuid())) {
+        //if (UUID_CHARACTERISTIC.equals(characteristic.getUuid())) {
             // For all other profiles, writes the data formatted in HEX.
             final byte[] data = characteristic.getValue();
+
             if (data != null && data.length > 0) {
                 final StringBuilder stringBuilder = new StringBuilder(data.length);
                 for(byte byteChar : data)
                     stringBuilder.append(String.format("%02X ", byteChar));
                 intent.putExtra(EXTRA_DATA, new String(data) + "\n" + stringBuilder.toString());
+                Log.d(TAG, "Byte stream:" + stringBuilder.toString());
+            }
+
+            try {
+                String strData = characteristic.getStringValue(10);
+                Log.d(TAG, "String value:" + strData);
+
+                int flag = characteristic.getProperties();
+                int format = -1;
+                if ((flag & 0x01) != 0) {
+                    format = BluetoothGattCharacteristic.FORMAT_UINT16;
+                    Log.d(TAG, "sensor data format UINT16.");
+                } else {
+                    format = BluetoothGattCharacteristic.FORMAT_UINT8;
+                    Log.d(TAG, "Sensor data format UINT8.");
+                }
+                final int intValue = characteristic.getIntValue(format, 10);
+                Log.d(TAG, String.format("Int value rate: %d", intValue));
+
+            }catch (Exception ex){
+                Log.e(TAG, ex.toString());
             }
             sendBroadcast(intent);
-        }
+        //}
 
     }
 
