@@ -179,19 +179,13 @@ public class ReadDataActivity extends Activity {
             return result;
         }
         String uuidCharacteristic = null;
-        String uuidService = null;
         for(BluetoothGattService gattService : gattServices){
-            uuidService = gattService.getUuid().toString();
-
-            if(uuidService.equals(SampleGattAttributes.GATT_SERVICE)){
-                List<BluetoothGattCharacteristic> gattCharacteristics =
-                        gattService.getCharacteristics();
-                for(BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics){
-
-                    uuidCharacteristic = gattCharacteristic.getUuid().toString();
-                    if(uuidCharacteristic.equals(SampleGattAttributes.GATT_CHARACTERISTIC)){
-                        return gattCharacteristic;
-                    }
+            List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
+            for(BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics){
+                uuidCharacteristic = gattCharacteristic.getUuid().toString();
+                if(uuidCharacteristic.equals(SampleGattAttributes.GATT_CHARACTERISTIC) ||
+                    uuidCharacteristic.equals(SampleGattAttributes.GATT_CHARACTERISTIC_TEST)){
+                    return gattCharacteristic;
                 }
             }
         }

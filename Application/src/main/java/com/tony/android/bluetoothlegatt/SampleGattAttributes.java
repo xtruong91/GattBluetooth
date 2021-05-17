@@ -12,10 +12,7 @@ public class SampleGattAttributes {
     public static String MAC_ADDRESS = "C3:2C:42:29:97:2B";
     public static String GATT_SERVICE = "bd8522d8-30e9-49d4-6c8d-04b58f529834";
     public static String GATT_CHARACTERISTIC = "bd851524-30e9-49d4-6c8d-04b58f529834";
-
-
-
-
+    public static String GATT_CHARACTERISTIC_TEST = "0000ff01-0000-1000-8000-00805f9b34fb";
     static {
         // Sample Services.
         attributes.put(GATT_SERVICE, "GATT Service");

@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ReadDataActivity"/>
-        <activity android:name=".DeviceControlActivity"/>
+<!--        <activity android:name=".DeviceControlActivity"/>-->
         <service android:name=".BluetoothLeService" android:enabled="true"/>
     </application>
 
