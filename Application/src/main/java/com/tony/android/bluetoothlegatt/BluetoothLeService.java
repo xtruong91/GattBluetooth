@@ -118,10 +118,11 @@ public class BluetoothLeService extends Service {
     }
 
     private String decodeMessage(String message){
+        Log.d(TAG, "decodeMessage:" + message);
         StringBuffer msg = new StringBuffer();
         String[] arrOfStr = message.split("0100");
         for (String item : arrOfStr) {
-            if (item.length() >= 8) {
+            if (item.length() >= 4) {
                 float ret = convertString2Float(item.substring(0, 8));
                 msg.append("values: " + ret + "\n");
             }
@@ -141,11 +142,10 @@ public class BluetoothLeService extends Service {
             final StringBuilder stringBuilder = new StringBuilder();
             final byte[] data = characteristic.getValue();
             if (data != null && data.length > 3) {
-                String result ="";
                 for(byte byteChar : data)
                     stringBuilder.append(String.format("%02X", byteChar));
-                if(data[0] == header1 && data[1] == header2 && data[2] == header3){
-                    result = decodeMessage(stringBuilder.toString());
+                if(data[0] == header1){
+                    String result = decodeMessage(stringBuilder.toString());
                     intent.putExtra(EXTRA_DATA, result);
                     sendBroadcast(intent);
                 }
@@ -154,7 +154,6 @@ public class BluetoothLeService extends Service {
                 String notify = "Can't read data from device\n";
                 intent.putExtra(EXTRA_DATA, notify);
                 sendBroadcast(intent);
-
             }
     }
 
