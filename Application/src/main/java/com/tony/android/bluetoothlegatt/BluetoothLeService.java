@@ -104,6 +104,31 @@ public class BluetoothLeService extends Service {
         sendBroadcast(intent);
     }
 
+    private final byte header1 = 0x06;
+    private final byte header2 = 0x01;
+    private final byte header3 = 0x00;
+
+    private float convertString2Float(String hex){
+        StringBuilder reverseStr = new StringBuilder();
+        reverseStr.append(hex);
+        reverseStr.reverse();
+        Long i = Long.parseLong(reverseStr.toString(), 16);
+        Float f = Float.intBitsToFloat(i.intValue());
+        return f;
+    }
+
+    private String decodeMessage(String message){
+        StringBuffer msg = new StringBuffer();
+        String[] arrOfStr = message.split("0100");
+        for (String item : arrOfStr) {
+            if (item.length() >= 8) {
+                float ret = convertString2Float(item.substring(0, 8));
+                msg.append("values: " + ret + "\n");
+            }
+        }
+        return msg.toString();
+    }
+
     private void broadcastUpdate(final String action,
                                  final BluetoothGattCharacteristic characteristic) {
         final Intent intent = new Intent(action);
@@ -115,37 +140,22 @@ public class BluetoothLeService extends Service {
             // For all other profiles, writes the data formatted in HEX.
             final StringBuilder stringBuilder = new StringBuilder();
             final byte[] data = characteristic.getValue();
-            if (data != null && data.length > 0) {
-                stringBuilder.append("Byte data:");
+            if (data != null && data.length > 3) {
+                String result ="";
                 for(byte byteChar : data)
-                    stringBuilder.append(String.format("%02X ", byteChar));
-                Log.d(TAG, "Byte data:" + stringBuilder.toString());
-            }
-
-            try {
-                String strData = characteristic.getStringValue(0);
-                stringBuilder.append("String data:");
-                stringBuilder.append(String.format("%02X ", strData));
-                Log.d(TAG, "String value:" + strData);
-                int flag = characteristic.getProperties();
-                int format = -1;
-                if ((flag & 0x01) != 0) {
-                    format = BluetoothGattCharacteristic.FORMAT_UINT16;
-                    Log.d(TAG, "sensor data format UINT16.");
-                } else {
-                    format = BluetoothGattCharacteristic.FORMAT_UINT8;
-                    Log.d(TAG, "Sensor data format UINT8.");
+                    stringBuilder.append(String.format("%02X", byteChar));
+                if(data[0] == header1 && data[1] == header2 && data[2] == header3){
+                    result = decodeMessage(stringBuilder.toString());
+                    intent.putExtra(EXTRA_DATA, result);
+                    sendBroadcast(intent);
                 }
-                final int intValue = characteristic.getIntValue(format, 0);
-                Log.d(TAG, String.format("Int value rate: %d", intValue));
+                Log.d(TAG, "Byte data:" + stringBuilder.toString());
+            }else{
+                String notify = "Can't read data from device\n";
+                intent.putExtra(EXTRA_DATA, notify);
+                sendBroadcast(intent);
 
-            }catch (Exception ex){
-                Log.e(TAG, ex.toString());
             }
-            intent.putExtra(EXTRA_DATA, stringBuilder.toString());
-            sendBroadcast(intent);
-        //}
-
     }
 
     public class LocalBinder extends Binder {
