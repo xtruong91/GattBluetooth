@@ -145,8 +145,8 @@ public class BluetoothLeService extends Service {
                 for(byte byteChar : data)
                     stringBuilder.append(String.format("%02X", byteChar));
                 if(data[0] == header1){
-                    String result = decodeMessage(stringBuilder.toString());
-                    intent.putExtra(EXTRA_DATA, result);
+                    //String result = decodeMessage(stringBuilder.toString());
+                    intent.putExtra(EXTRA_DATA, stringBuilder.toString());
                     sendBroadcast(intent);
                 }
                 Log.d(TAG, "Byte data:" + stringBuilder.toString());
