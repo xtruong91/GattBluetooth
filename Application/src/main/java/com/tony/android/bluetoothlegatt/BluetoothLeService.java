@@ -145,16 +145,12 @@ public class BluetoothLeService extends Service {
                 for(byte byteChar : data)
                     stringBuilder.append(String.format("%02X", byteChar));
                 if(data[0] == header1){
-                    //String result = decodeMessage(stringBuilder.toString());
-
+                    String result = decodeMessage(stringBuilder.toString());
+                    Log.d(TAG, "result:" + result);
+                    intent.putExtra(EXTRA_DATA, stringBuilder.toString());
+                    sendBroadcast(intent);
                 }
-				Log.d(TAG, "data[0] = " + String.format("%02X", data[0]) + "\n");
-				Log.d(TAG, "data[1] = " + String.format("%02X", data[1]) + "\n");
-				Log.d(TAG, "data[2] = " + String.format("%02X", data[2]) + "\n");
-				
                 Log.d(TAG, "Byte data:" + stringBuilder.toString());
-				intent.putExtra(EXTRA_DATA, stringBuilder.toString());
-                sendBroadcast(intent);
             }else{
                 String notify = "Can't read data from device\n";
                 intent.putExtra(EXTRA_DATA, notify);

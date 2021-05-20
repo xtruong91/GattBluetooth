@@ -142,6 +142,11 @@ public class ReadDataActivity extends Activity {
             return;
         }
         final int charaProp =  mSensorDataCharacteristic.getProperties();
+        if ((charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
+            mNotifyCharacteristic = mSensorDataCharacteristic;
+            mBluetoothLeService.setCharacteristicNotification(
+                    mSensorDataCharacteristic, true);
+        }
         if ((charaProp | BluetoothGattCharacteristic.PROPERTY_READ) > 0){
             if (mNotifyCharacteristic != null) {
                 mBluetoothLeService.setCharacteristicNotification(
@@ -150,13 +155,7 @@ public class ReadDataActivity extends Activity {
             }
             mBluetoothLeService.readCharacteristic(mSensorDataCharacteristic);
         }
-
-        if ((charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
-            mNotifyCharacteristic = mSensorDataCharacteristic;
-            mBluetoothLeService.setCharacteristicNotification(
-                    mSensorDataCharacteristic, true);
-        }
-        Toast.makeText(getApplicationContext(),"Read data success",Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),"Read data success",Toast.LENGTH_LONG).show();
     }
     private void updateConnectionState(final int resourceId) {
         runOnUiThread(new Runnable() {
