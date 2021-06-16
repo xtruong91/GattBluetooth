@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright 2013 The Android Open Source Project
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<resources>
+    <color name="colorPrimary">@color/nordicBlue</color>
+    <color name="colorOnPrimary">@color/white</color>
+    <color name="colorAccentOnPrimary">@color/white</color>
+    <color name="colorSecondary">@color/nordicLake</color>
+    <color name="colorStatusBar">@color/nordicBlueDark</color>
+
+    <color name="colorBackground">@color/lightGray</color>
+    <color name="colorOnBackground">@color/black</color>
+
+    <!--
+        Nordic logo on splash screen.
+        When using light/dark top background, consider changing status bar to light/dark
+        in styles-v23.
+    -->
+    <color name="colorNordicLogo">@color/nordicBlue</color>
+    <color name="colorNordicLogoText">@color/black</color>
+    <color name="colorNordicLogoBottom">@color/white</color>
+    <color name="colorNordicLogoTop">@color/nordicLightGray</color>
+
+</resources>
